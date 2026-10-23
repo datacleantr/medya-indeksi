@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Metodoloji — Medya İndeksi</title>
+<meta name="description" content="Metodoloji">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head><body><div class="wrap">
+<p class="kicker"><a href="index.html">← Medya İndeksi</a></p><h1>Metodoloji</h1>
+<p>Bu sayfa, Medya İndeksi&#x27;nin neyi nasıl ölçtüğünü ve <strong>neyi ölçemediğini</strong> ayrıntılı olarak anlatır.</p>
+<p>Bir ölçüm aracının sınırlarını bilmeden sonuçlarını okumak yanıltıcıdır; bu yüzden sınırlar sayfanın</p>
+<p>sonuna değil, yöntemin yanına yazılmıştır.</p>
+<p>Son güncelleme: 23.10.2026 · Veri kapsamı: 18.02.2015 – 22.10.2026</p>
+<hr>
+<h2>1. Ne ölçülüyor</h2>
+<p><strong>Medya İndeksi medyanın kendisini ölçer.</strong> Bir konunun hangi yayınlarda, ne sıklıkta, hangi dille ele</p>
+<p>alındığını gösterir.</p>
+<p>Ölçülen birim <strong>habere konu olma yoğunluğudur</strong>, olayın kendisi değil. Bu ayrım her çıktıda geçerlidir:</p>
+<ul>
+<li>Bir konuda haber sayısının artması, o alanda daha çok şey yaşandığı anlamına <strong>gelmez</strong>; daha çok</li>
+</ul>
+<p>  yazıldığı anlamına gelir.</p>
+<ul>
+<li>Duygu tonu, haberin <strong>dilini</strong> ölçer; olayın iyi ya da kötü olduğunu göstermez.</li>
+<li>Araç hiçbir çıktısında <strong>neden-sonuç ilişkisi kurmaz</strong>. İki şeyin aynı dönemde artması, birinin</li>
+</ul>
+<p>  diğerine yol açtığı anlamına gelmez.</p>
+<h2>2. Veri kaynakları</h2>
+<h3>2.1. GDELT GKG 2.1 — birincil kaynak</h3>
+<p><a href="https://www.gdeltproject.org/">The GDELT Project</a> dünya genelinde haber sitelerini sürekli tarar ve</p>
+<p>her haber için yapısal bir kayıt üretir. Türkçe haberler iki ölçütten biriyle seçilir: GDELT&#x27;in dil</p>
+<p>alanı <code>srclc:tur</code> ise, veya haberin alan adı <code>.tr</code> ile bitiyorsa.</p>
+<p>Her kayıtta bulunanlar: yayın tarihi ve saati, haber sitesi, haber adresi, başlık, duygu tonu</p>
+<p>(<code>AvgTone</code>), tema kodları, haberde geçen kişi/kurum/yer listeleri, kelime sayısı.</p>
+<p><strong>Haberin tam metni yoktur.</strong> GDELT metni saklamaz; yalnızca metinden çıkardığı bilgileri verir.</p>
+<p>Medya İndeksi de ayrıca tam metin toplamaz.</p>
+<h3>2.2. Arşiv dışı toplama — kapsam boşluğunu kapatmak</h3>
+<p>GDELT&#x27;in taramadığı yayınlar vardır ve bu boşluk konuya göre sonuçları saptırabilir. Bu yüzden</p>
+<p>14 yayının künyeleri kendi <strong>site haritalarından ve RSS akışlarından</strong> ayrıca toplanır:</p>
+<p>şu an 2.651.800 künye.</p>
+<p>Kurallar: tam metin toplanmaz, yalnızca künye (başlık, adres, tarih). <code>robots.txt</code>&#x27;ye uyulur. Site</p>
+<p>başına saniyede en fazla bir istek gönderilir.</p>
+<p><strong>Bu kayıtlar ton, tema ve kişi bilgisi içermediği için göstergelere, tona ve sekmelere karışmaz.</strong></p>
+<p>Ayrı bir bölümde gösterilir ve kapsam denetiminde &quot;yalnızca ek toplamada&quot; olarak sayılır.</p>
+<h3>2.3. Yardımcı kaynaklar</h3>
+<table><thead><tr><th>Kaynak</th><th>İçerik</th><th>Dönem</th></tr></thead><tbody><tr><td>GQG (alıntılar)</td><td>Haberlerdeki alıntılar ve öncesi/sonrası bağlam</td><td>28.09.2025&#x27;den itibaren</td></tr><tr><td>GDG (sayfa değişiklikleri)</td><td>Yayından sonra değiştirilen veya silinen haber sayfaları</td><td>Son 12 ay</td></tr><tr><td>Events 2.0 (CAMEO)</td><td>Haberlerin anlattığı kodlanmış olaylar</td><td>Son 12 ay</td></tr></tbody></table>
+<h2>3. Veri hattı</h2>
+<p>Veri Google BigQuery&#x27;de gün bölümlü tablolarda tutulur. Günlük yükleme her gün 08:15 UTC&#x27;de</p>
+<p>(Türkiye saatiyle 11:15) bir önceki günün verisini ekler. Her yükleme adımı kendi işlemindedir;</p>
+<p>tekrar çalıştırmak güvenlidir.</p>
+<p>Panelin üstündeki <strong>veri tazeliği şeridi</strong>, verinin son gününü ve kaç gün geride olduğunu her</p>
+<p>ziyarette gösterir. Günlük yükleme bir önceki günü eklediği için 1 gün gecikme normaldir; daha</p>
+<p>eskiyse şerit uyarı rengine döner.</p>
+<h2>4. Ölçüm yöntemleri</h2>
+<h3>4.1. Arama</h3>
+<p>Arama, ifadenin haberin <strong>adresinde, başlığında veya kişi listesinde</strong> geçtiği haberleri bulur.</p>
+<p>Yalnızca haber metninin içinde geçen bir ad bulunamaz — çünkü metin yoktur.</p>
+<p>Kalıplar RE2 sözdizimindedir ve her kalıp <strong>kelime başı sınırı</strong> ister. Son kelime büyük harfliyse</p>
+<p>veya dört harf ya da kısaysa kelime sonu da sınırlanır; böylece &quot;Kars&quot; araması &quot;karşı&quot; kelimesini</p>
+<p>getirmez. Türkçe karakterler başlıkta hiçbir zaman düz gelmediği için her kalıp Türkçe varyantlarla</p>
+<p>birlikte aranır.</p>
+<p>50.000 haberden fazlasıyla eşleşen aramalar durdurulur.</p>
+<h3>4.2. Çerçeveler</h3>
+<p>Her habere, <strong>başlığındaki</strong> anahtar kelimelere göre bir veya birden fazla çerçeve atanır</p>
+<p>(Siyaset, Yargı, Güvenlik, Ekonomi, Afet, Sağlık, Eğitim, Dış ilişkiler, Göç, Kültür, Anma).</p>
+<p>Başlık yoksa haberin adresindeki kelimeler kullanılır.</p>
+<p>Bilinmesi gerekenler:</p>
+<ul>
+<li>Bir haber <strong>birden fazla çerçeveye</strong> girebilir; bu yüzden çerçeve paylarının toplamı %100&#x27;ü aşar.</li>
+<li>Hiçbirine uymayan haber <strong>&quot;Diğer&quot;</strong> olur ve bu pay yüksektir — ölçümde haberlerin yarıdan fazlası.</li>
+</ul>
+<p>  Çerçeve seti bilinçli olarak dar tutulmuş bir anahtar kelime listesidir; haberlerin tamamını</p>
+<p>  sınıflandırmaz.</p>
+<ul>
+<li>Kullanıcı kendi çerçeve listesini yazabilir; çerçeveler koda gömülü değildir.</li>
+</ul>
+<h3>4.3. Yayın grupları</h3>
+<p>Kilit yayınlar, karşılaştırma yapılabilmesi için <strong>yayın çizgisine göre</strong> gruplanır: haber ajansları,</p>
+<p>ana akım, hükümete yakın, muhalif/bağımsız, ulusalcı, Kürt siyasetine yakın, Gülen hareketine yakın,</p>
+<p>yabancı yayınların Türkçe servisleri.</p>
+<p>Bu gruplama hakkında bilinmesi gerekenler:</p>
+<ul>
+<li><strong>Gruplama bize aittir, GDELT&#x27;e değil.</strong> Veri kaynağı yayınları sınıflandırmaz; bu ayrım aracın</li>
+</ul>
+<p>  kendi editoryal kararıdır.</p>
+<ul>
+<li>Ölçüt, yayınların <strong>kamuya açık yayın çizgisi ve sahiplik yapısıdır</strong>; içerik analiziyle veya</li>
+</ul>
+<p>  aracın kendi ölçümleriyle belirlenmemiştir. Bir yayının bir gruba konması, o yayın hakkında bir</p>
+<p>  değer yargısı değil, karşılaştırma için kullanılan bir etikettir.</p>
+<ul>
+<li>Gruplar <strong>sabit değildir</strong>: yayın çizgisi değişen bir yayının grubu güncellenir.</li>
+<li>Çıktılarda <strong>grup düzeyinde</strong> rakam verilir; haftalık bültende hangi yayının hangi grupta olduğu</li>
+</ul>
+<p>  gösterilmez.</p>
+<ul>
+<li>Araç, hiçbir grubu diğerine göre doğru, güvenilir veya nitelikli saymaz. Ölçülen tek şey, o</li>
+</ul>
+<p>  grubun hangi konuyu ne kadar yazdığıdır.</p>
+<p>Bu etiketlerin hassas olduğunun farkındayız. Yayımlanmalarının nedeni, bir yayın grubunun gündemini</p>
+<p>diğerleriyle karşılaştırmanın başka bir yolu olmaması ve ölçütün gizli tutulmasının şeffaflığı daha</p>
+<p>çok zedeleyecek olmasıdır.</p>
+<h3>4.4. Duygu tonu</h3>
+<p>Ton, GDELT&#x27;in <code>AvgTone</code> değeridir: haber metninin olumlu ve olumsuz kelime yoğunluğundan hesaplanan</p>
+<p>bir sayı. Negatif değerler olumsuz dili gösterir.</p>
+<p><strong>Ton, haberin İngilizce makine çevirisi üzerinden hesaplanır.</strong> Tek tek haberlerin tonuna değil,</p>
+<p>büyük kümelerin ortalamasına güvenilmelidir.</p>
+<h3>4.5. Kopya haber tespiti</h3>
+<p>İki haber şu durumlarda aynı kopya grubuna girer: (1) ton değerlerinin yedisi birebir aynıysa — bu</p>
+<p>pratikte aynı metin demektir; veya (2) başlıkları yeterince benzer (Jaccard ≥ 0,6), aralarında</p>
+<p>en fazla 48 saat varsa ve kelime sayıları yakınsa. Bağlantılar geçişlidir; her grubun en erken</p>
+<p>haberi &quot;orijinal&quot;, diğerleri kopya sayılır.</p>
+<h3>4.6. Veri kapsamı denetimi</h3>
+<p>Her arama sonucu bir kapsam değerlendirmesi alır: <strong>Yeterli</strong>, <strong>Sınırlı</strong> veya <strong>Yetersiz</strong>.</p>
+<p>Üç denetim düzeyi belirler:</p>
+<p>1. <strong>Arşiv öncesine atıf.</strong> Başlıklar 2015 öncesi yıllara sık atıf yapıyorsa, olayın kendisi</p>
+<p>   arşivde yok demektir.</p>
+<p>2. <strong>Başlık boşluğu.</strong> Başlıksız haber oranı yüksekse (GDELT Temmuz 2019 öncesinde başlık tutmaz)</p>
+<p>   başlığa dayalı analizler zayıflar.</p>
+<p>3. <strong>GDELT boşlukları.</strong> Aralıkta GDELT&#x27;in hiç veri toplamadığı günler varsa uyarılır:</p>
+<p>   29.08.2017 ve 15.06.2025 – 01.07.2025.</p>
+<p>Aynı değerlendirme PDF raporun başında da yer alır.</p>
+<h3>4.7. Sapma ölçüsü</h3>
+<p>Bir çerçevenin payının olağandışı olup olmadığı, **aynı çerçevenin kendi önceki</p>
+<p>52 haftasına** göre belirlenir ve yüzdelik dilim olarak verilir.</p>
+<p>İki tasarım kararı ve gerekçeleri:</p>
+<ul>
+<li><strong>Taban kayan penceredir, tüm geçmiş değil.</strong> Tüm geçmişe göre yüzdelik hesaplamak, yıllar içinde</li>
+</ul>
+<p>  yapısal olarak yükselen bir çerçeveyi her hafta &quot;sapma&quot; diye işaretler. Ölçümde bir çerçeve tüm</p>
+<p>  geçmişe göre son 12 haftanın sekizinde 90. yüzdeliğin üstündeydi; kayan tabanla dördünde.</p>
+<ul>
+<li><strong>Yüzde değişim değil yüzdelik dilim, üstelik mutlak bir tabanla.</strong> Küçük tabanlı seriler küçük</li>
+</ul>
+<p>  değişimlerde dev oranlar üretir. Haftalık haber sayısı 150&#x27;in altındaki çerçeveler sapma</p>
+<p>  olarak raporlanmaz.</p>
+<h3>4.8. Yapay zekâ özeti</h3>
+<p>Panelde istenirse, bir arama sonucunun rakamları bir dil modeliyle düzyazıya çevrilir.</p>
+<p><strong>Model ölçmez, anlatır:</strong> bütün sayılar modelden önce ve ondan bağımsız üretilir; model yalnızca</p>
+<p>ekranda zaten görünen rakamları cümleye döker.</p>
+<p>Üç kural isteme yazılıdır:</p>
+<p>1. Ekrandaki olgu paketinin dışında hiçbir bilgi kullanılamaz; model başka bir kaynağa bakmaz.</p>
+<p>2. <strong>Neden-sonuç kurulamaz.</strong></p>
+<p>3. Kapsam &quot;Sınırlı&quot; veya &quot;Yetersiz&quot; ise ilk paragrafta söylenir.</p>
+<p>Her paragraf <strong>veri</strong> (rakamların aktarımı) veya <strong>yorum</strong> (rakamlar arasında bağ kuran cümle)</p>
+<p>olarak etiketlenir.</p>
+<h2>5. Bilinen sınırlar</h2>
+<p>Bu bölüm aracın zayıf noktalarının eksiksiz listesidir.</p>
+<table><thead><tr><th>Sınır</th><th>Ne anlama gelir</th></tr></thead><tbody><tr><td><strong>Tam sayım değil, örneklem</strong></td><td>Kapsam GDELT&#x27;in taradığı sitelerle sınırlıdır. Her haber ve her site veriye girmez.</td></tr><tr><td><strong>Makine çevirisi hataları</strong></td><td>Kişi, kurum ve yer adları bozulabilir: bir ad başka kelimeye dönüşebilir, bir soyadı yer adı sanılabilir. Tek tek kayıtlara değil, genel eğilimlere bakılmalıdır.</td></tr><tr><td><strong>Tam metin yok</strong></td><td>Yalnızca künye ve türetilmiş alanlar vardır. Metin içi analiz yapılamaz.</td></tr><tr><td><strong>&quot;Diğer&quot; payı yüksek</strong></td><td>Haberlerin yarıdan fazlası hiçbir çerçeveye uymaz. Çerçeve payları bu artık kümeyi de içeren toplamın içindedir.</td></tr><tr><td><strong>Temmuz 2019 öncesi başlık yok</strong></td><td>O dönemde çerçeveler adresten atanır ve daha zayıftır. Uzun dönem karşılaştırmalarında bu kırılma vardır.</td></tr><tr><td><strong>Yıllar arası kapsam farkı</strong></td><td>GDELT&#x27;in taradığı site sayısı yıllara göre değişir. Ham haber sayılarını yıllar arasında karşılaştırırken dikkat gerekir; bu yüzden paylar kullanılır.</td></tr><tr><td><strong>Olay kodlaması seyrek</strong></td><td>Türkçe haberlerin yalnızca yaklaşık altıda biri kodlanmış bir olaya bağlanır; ekonomi haberlerinde bu oran sıfıra yakındır. Olay görünümü eşik aşılmadan gösterilmez.</td></tr><tr><td><strong>Veri bir gün geriden</strong></td><td>Anlık değildir.</td></tr><tr><td><strong>GDELT boşlukları</strong></td><td>29.08.2017 ve 15.06.2025 – 01.07.2025 tarihlerinde veri yoktur.</td></tr></tbody></table>
+<h2>6. Tekrarlanabilirlik</h2>
+<ul>
+<li>Her grafiğin altında, o grafiğin dayandığı veriyi açıklayan bir <strong>veri notu</strong> vardır.</li>
+<li>Her kartta <strong>&quot;Kanıtı göster&quot;</strong> ile kartın dayandığı haberlerin listesi açılır.</li>
+<li>Sonuçlar CSV olarak indirilebilir; PDF raporda ekrandakiyle <strong>aynı rakamlar</strong> kullanılır (ikisi</li>
+</ul>
+<p>  aynı hesabı çağırır).</p>
+<ul>
+<li>Çerçeve seti, kopya tespiti eşikleri ve tarih aralığı kullanıcı tarafından değiştirilebilir ve</li>
+</ul>
+<p>  raporda hangi ayarların kullanıldığı yazar.</p>
+<h2>7. Etik çerçeve</h2>
+<ul>
+<li>Analizler <strong>kamusal aktörler ve medya kuruluşları</strong> düzeyinde yapılır.</li>
+<li><strong>Özel kişiler hakkında profil çıkarılmaz</strong>; mağdur ve çocuk adları raporlanmaz.</li>
+<li>Haberlerin tam metni saklanmaz ve yeniden yayımlanmaz.</li>
+<li>&quot;Koordinasyon&quot;, &quot;sansür&quot; gibi sonuçlar <strong>gösterge</strong> olarak sunulur, kanıt olarak değil. Her</li>
+</ul>
+<p>  göstergenin arkasında ham kayıtlar gösterilir.</p>
+<h2>8. Kaynak gösterimi</h2>
+<p>Veri kaynağı <a href="https://www.gdeltproject.org/">The GDELT Project</a>&#x27;tir (GKG 2.1, GQG, GDG, Events 2.0).</p>
+<p>GDELT verisi açık ve ücretsizdir; Medya İndeksi GDELT tarafından geliştirilmemiştir. Çıktılar</p>
+<p>paylaşılırken hem Medya İndeksi&#x27;ne hem GDELT&#x27;e atıf yapılmalıdır.</p>
+<footer>
+<p>Veri kaynağı: <a href="https://www.gdeltproject.org/">The GDELT Project</a> (GKG 2.1). GDELT verisi açık ve ücretsizdir; bu sayfa GDELT tarafından hazırlanmamıştır.</p><p><a href="metodoloji.html">Metodoloji</a></p><p class="small">Medya İndeksi · sayfa 23.10.2026 tarihinde üretildi.</p>
+</footer>
+</div></body></html>
